@@ -1,0 +1,21 @@
+<h1>profile Page</h1>
+<ol>
+<li>
+  <%=user.email%>
+</li>
+<li>
+  <%=user.name%>
+</li>
+</ol>
+<section id="feed-posts">
+  <form action="/posts/create" id="new-post-form" method="POST">
+  <textarea name="postContent" required rows="3" cols="30" placeholder="What's on your mind..."></textarea>
+  <button type="submit">Post</button>
+  </form>
+</section>
+  <div>
+
+<div style="background-color: yellow;height:auto;width:auto">
+   <%= posts%>
+</div>
+  </div>

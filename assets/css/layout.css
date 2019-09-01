@@ -1,0 +1,16 @@
+#particles-js {
+  margin: 0px;
+  padding: 0px;
+  background-image: url("../images/nasa-Q1p7bh3SHj8-unsplash.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 76vh; }
+
+#brand {
+  margin: 15px;
+  margin-bottom: 7px;
+  font-family: sans-serif;
+  color: #ecd5d5; }
+
+a:active {
+  color: black; }

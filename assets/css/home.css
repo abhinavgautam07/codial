@@ -1,0 +1,6 @@
+a {
+  color: #ffc107; }
+
+a:hover {
+  color: #ffc107;
+  text-decoration: unset; }
