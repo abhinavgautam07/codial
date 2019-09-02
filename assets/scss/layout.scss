@@ -1,11 +1,14 @@
 #particles-js {
   margin: 0px;
 padding:0px;
-   background-image: url("../images/nasa-Q1p7bh3SHj8-unsplash.jpg");
+   background-image: url("../images/back.jpg");
   //  background-repeat: repeat-x;
    background-position: center;
    background-size: cover;
    height:76vh;
+   position:fixed !important;
+   display:block;
+   z-index: -1;
  
   }
  

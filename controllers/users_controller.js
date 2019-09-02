@@ -10,11 +10,7 @@ module.exports.signIn=function(req,res){
       title:"signIn"
    });
 }
-module.exports.profile=function(req,res){
-  return   res.render('profile',{
-    title:"profilePage"
-  });
-  }
+
 module.exports.signUp=function(req,res){
   //isAuthenticated is global as req is global passport just adds the property isAuthenticated to it
  if(req.isAuthenticated()){
