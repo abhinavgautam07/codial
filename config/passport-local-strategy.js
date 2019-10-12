@@ -47,7 +47,7 @@ passport.deserializeUser(function (id, done) {
 passport.checkAuthentication = function (req, res, next) {
   //passport puts the method on request isAuthenticated(i.e.  this property is given to request by passport)
   //if the user is signed in pass on the request to the next function which is controller's action
-
+  //isAuthenticated does is that whether session-cookie is present or not.
   if (req.isAuthenticated()) {
     return next();
   }

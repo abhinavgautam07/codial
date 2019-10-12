@@ -6,10 +6,11 @@ const usersController = require('../controllers/users_controller');
 
 //in line 7 the middleware is just checking that user is authenticated or not.
 router.get('/profile', passport.checkAuthentication,usersController.profile);
-router.get('/sign-out',usersController.destroyUser);
+router.get('/sign-out',usersController.destroySession);
 router.get('/sign-up', usersController.signUp);
 router.get('/sign-in', usersController.signIn);
 router.post('/create', usersController.createUser);
+
 //here the passport is authenticating the user i.e first uses the local strtaegy to authenticate
 //in local strategy what it does that it first receives email in the usernameField and the password and then
 //find the user. if error or password doesnot match occurs the failureRedirect is called using done(err) or 
@@ -21,7 +22,7 @@ router.post('/create', usersController.createUser);
 //if the cookie get expired as the authentication involves storing into cookies.
 
 //Also during authentication process, passport puts a method isAuthenticated on the req in one of the middleware
-//and once cookie gets expired the isAuthenticated is also removed and req.user also gets removed.
+//and once cookie gets expired the isAuthenticated is set to false  and req.user also gets removed.
 //
 router.post('/create-session', passport.authenticate(
     'local',
