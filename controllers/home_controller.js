@@ -1,11 +1,34 @@
+const Post = require('../models/post_schema');
+const mongoose=require('mongoose');
+const passport = require('passport');
+module.exports.home = function(req, res){
+    // console.log(req.cookies);
+    // res.cookie('user_id', 25);
 
+    // Post.find({}, function(err, posts){
+    //     return res.render('home', {
+    //         title: "Codeial | Home",
+    //         posts:  posts
+    //     });
+    // });
 
+    // populate the user of each post
+console.log("passport",passport.authenticate);
+    Post.find({})
+    .populate('user')
+    .populate({
+        path: 'comments',
+        populate: {
+            path: 'user'
+        }
+    })
+    .exec(function(err, posts){
+        return res.render('home', {
+            title: "Codeial | Home",
+            posts:  posts
+        });
+    })
 
-
-module.exports.home=function(req,res){
-   console.log()
- 
-    return res.render('home',{
-    title: "hello"
-    });
 }
+
+// module.exports.actionName = function(req, res){}

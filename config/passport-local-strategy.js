@@ -25,13 +25,14 @@ passport.use(new localStrategy({
 
 ));
 // user returned by done is sent to serializer
-//serializer will store userid in session-cookie which was created by xpress session and it be encrypted using the secret
+//This function then calls done(null, user.id). Passport takes that user id and stores it internally on req.session.passport(i.e stores the user.id in session cookie which is then encrypted using express-session) which is passport’s internal mechanism to keep track of things.
 
 passport.serializeUser(function (user, done) {
   return done(null, user.id);
 });
-
-// deserializing the user using the secret in the cookies
+//deselizer receives the  passport-session data not directly the user id from serializer.
+//serializer stores in passport session or session-cookie and then it gets transferred to desializer 
+// deserializeUser() then makes a request to our DB to find the full profile information for the user and then calls done(null, user). This is where the user profile is attached to the request handler at req.user. 
 passport.deserializeUser(function (id, done) {
   User.findById(id, function (err, user) {
     if (err) {
@@ -45,8 +46,8 @@ passport.deserializeUser(function (id, done) {
 //check if user is authenticated or not
 passport.checkAuthentication = function (req, res, next) {
   //passport puts the method on request isAuthenticated(i.e.  this property is given to request by passport)
-  //if the user is signed in passon the request to the next function which is controller's action
-  console.log("middlware")
+  //if the user is signed in pass on the request to the next function which is controller's action
+
   if (req.isAuthenticated()) {
     return next();
   }
@@ -59,7 +60,8 @@ passport.checkAuthentication = function (req, res, next) {
 //set the user for the views
 passport.setAuthenticatedUser = function (req, res, next) {
   if (req.isAuthenticated()) {
-    //whenever a user is signed in its information is available in req.user from the session -cookie and .user property is given by the passport to the request but the it has not been given to response
+    //whenever a user is signed in its information is available in req.user from deserialize user and 
+    //.user property is given by the passport to the request but the it has not been given to response
     res.locals.user = req.user;
 
   }

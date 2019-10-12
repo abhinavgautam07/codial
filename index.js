@@ -40,7 +40,7 @@ app.use(session({
   saveUninitialized: false,
   resave: false,
   cookie: {
-    maxAge: (1000 * 60 * 100)
+    maxAge: (1000 * 60*100)
   }, store: new mongoStore(
     {
       mongooseConnection: db,
@@ -53,7 +53,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
-// routes should be placed after the initialise otherwise middleware in routes wont work and give the error
+// routes should be placed after the setAutheticatedUser middleware as it contains next(),otherwise res.user wont get set 
 app.use('/', require('./routes'));
 const port = 8000;
 

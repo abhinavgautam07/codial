@@ -4,4 +4,66 @@
 <button type="button" class="btn btn-dark btn-sm"><a href="/users/sign-in">Sign In</a></button>
 <button type="button" class="btn btn-dark btn-sm"><a href="/users/sign-up">Sign Up</a></button>
 
+<% if(locals.user){%>
+<section id="feed-posts" >
+  <form action="/posts/create" id="new-post-form" method="POST">
+  <textarea name="postContent" required rows="3" cols="30" placeholder="What's on your mind..."></textarea>
+  <button type="submit">Post</button>
+  </form>
+</section>
+<%}%>
+  <ul >
 
+<% for(let post of posts){%>
+  
+  <li>
+<p><% if(locals.user && locals.user.id==post.user.id){%>
+  <small>
+      <a href="/posts/destroy/<%=post._id%>">X</a>
+    </small> <%}%>
+  
+  <%= post.content%>
+  <br>
+  <%= post.user.name%>
+</p>
+<div class="add-posts-comments">
+<% if(locals.user){%>
+  
+  <form action="/comments/create" method="POST">
+  
+  <input type="text" name="content" placeholder="add a comment...">
+  <!-- the id of the post to which comment is being added needed to be sent -->
+  <input type="hidden" name="post" value="<%= post._id %>"> 
+  <button type="submit">Add comment</button>
+  
+  </form>
+  
+  <%}%>
+
+
+</div>
+
+<div class="posts-comments">
+  <ul>
+<% for(let comment of post.comments){%>
+<li>
+    <%=comment.content%>
+    <br>
+    <small>
+      <%=comment.user.name%>
+    </small>
+
+</li>
+
+
+<%}%>
+
+
+</ul>
+</div>
+
+  </li>
+  
+  
+  <%}%>
+</ul>
