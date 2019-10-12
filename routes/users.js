@@ -22,6 +22,7 @@ router.post('/create', usersController.createUser);
 
 //Also during authentication process, passport puts a method isAuthenticated on the req in one of the middleware
 //and once cookie gets expired the isAuthenticated is also removed and req.user also gets removed.
+//
 router.post('/create-session', passport.authenticate(
     'local',
     {failureRedirect: '/users/sign-in'},
