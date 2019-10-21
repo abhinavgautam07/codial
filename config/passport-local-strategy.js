@@ -31,8 +31,8 @@ passport.serializeUser(function (user, done) {
   return done(null, user.id);
 });
 //deselizer receives the  passport-session data not directly the user id from serializer.
-//serializer stores in passport session or session-cookie and then it gets transferred to desializer 
-// deserializeUser() then makes a request to our DB to find the full profile information for the user and then calls done(null, user). This is where the user profile is attached to the request handler at req.user. 
+//serializer stores in passport session or session-cookie and then this session-cookie gets transferred to desializer 
+// deserializeUser() then makes a request to our DB to find the full profile information for the user and then calls done(null, user). This is where the user profile is attached to the request handler as req.user. 
 passport.deserializeUser(function (id, done) {
   User.findById(id, function (err, user) {
     if (err) {

@@ -1,7 +1,16 @@
+#home-container {
+  display: flex;
 
-a {
-  color: #ffc107; }
+  #feed-posts{
+    width:70%;
+    padding:10%;
+  }
+  #user-friends{
+    width:30%;
+    padding:10px;
+    border: 1px solid lightgrey;
+    height:100%;
+  }
 
-a:hover {
-  color: #ffc107;
-  text-decoration: unset; }
+
+}

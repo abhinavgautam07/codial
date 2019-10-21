@@ -4,8 +4,6 @@
   background-image: url("../images/back.jpg");
   background-position: center;
   background-size: cover;
-  height: 76vh;
-  position: fixed !important;
   display: block;
   z-index: -1; }
 
