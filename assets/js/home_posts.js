@@ -14,11 +14,14 @@ let createPost=function(){
       type: "post",
       url: "/posts/create",
       data: newPostForm.serialize(), //this is data we are sending to the server
-      // Our success function is where we do things after we get a successful AJAX response,
+     // Our success function is where we do things after we get a successful AJAX response,
     success: function (data) { //this is the data which is recieved from the server
         let newPost=newPostDom(data.data.post);
         $("#post-list-container>ul").prepend(newPost);
-      },error: function(error){
+        DeletePost($(' .delete-post-button', newPost));
+      },
+      dataType:"json",
+      error: function(error){
         console.log(error);
       }
     });
@@ -35,7 +38,7 @@ let newPostDom=function(post){
     
     ${post.content}
     <br>
-    ${ post.user.name}
+    ${post.user.name}
   </p>
   <div class="add-posts-comments">
     
@@ -61,6 +64,30 @@ let newPostDom=function(post){
   </div>
   
     </li>`)
+}
+
+
+//method to delete post
+let DeletePost=(deleteLink)=>{
+$(deleteLink).click((event)=>{
+  event.preventDefault();
+
+  $.ajax({
+    type: "get",
+    //we are sending the id of the  post to be deleted in href using params
+    url: $(deleteLink).prop('href'),
+    data: "data",
+    
+    success: function (data) {
+      //we will get the id of the post which was deleted in the data,
+      $(`#post-${data.data.post_id}`).remove();
+      //.reomve is jquery function for removing element from dom
+    },error:function(error){
+      console.log(error.responseText);
+    }
+  });
+});
+
 }
  createPost();
 }
