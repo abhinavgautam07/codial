@@ -3,11 +3,14 @@ const Comment = require('../models/comments');
 const User=require('../models/users_schema');
 module.exports.create = async function (req, res) {
   try {
-    let post = await Post.create({
+    let posthelper = await Post.create({
       content: req.body.postContent,
       user: req.user._id
     });
-    post.populate('user');
+    //we are using postHelper as .populate donot work with create it works only with find
+    //and to show user which was earlier printed undefined we need to populate the post
+    let post=await Post.findById(posthelper._id)
+    .populate('user');
     if (req.xhr) {
       return res.status(200).json({
         data: {

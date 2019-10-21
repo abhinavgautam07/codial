@@ -11,7 +11,7 @@
   <div class="add-posts-comments">
     <% if(locals.user){%>
 
-    <form action="/comments/create" method="POST">
+    <form action="/comments/create" method="POST" class="new-comment-form">
 
       <input type="text" name="content" placeholder="add a comment...">
       <!-- the id of the post to which comment is being added needed to be sent -->
@@ -39,3 +39,4 @@
   </div>
   
     </li>
+    <script type="text/javascript" src="/js/post_comments.js"></script>

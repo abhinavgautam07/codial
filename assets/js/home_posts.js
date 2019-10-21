@@ -16,7 +16,9 @@ let createPost=function(){
       data: newPostForm.serialize(), //this is data we are sending to the server
      // Our success function is where we do things after we get a successful AJAX response,
     success: function (data) { //this is the data which is recieved from the server
-        let newPost=newPostDom(data.data.post);
+   
+      let newPost=newPostDom(data.data.post);
+        console.log(data.data.post)
         $("#post-list-container>ul").prepend(newPost);
         DeletePost($(' .delete-post-button', newPost));
       },
