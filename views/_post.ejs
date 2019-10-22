@@ -11,7 +11,7 @@
   <div class="add-posts-comments">
     <% if(locals.user){%>
 
-    <form action="/comments/create" method="POST" class="new-comment-form">
+    <form action="/comments/create" id="post-<%=post._id%>-comment-form" method="POST" >
 
       <input type="text" name="content" placeholder="add a comment...">
       <!-- the id of the post to which comment is being added needed to be sent -->
@@ -25,8 +25,8 @@
   
   </div>
   
-  <div class="posts-comments">
-    <ul>
+  <div id="posts-comments">
+    <ul id="post-comments-<%=post._id%>">
   <% for(comment of post.comments){%>
 
     <%- include('_comment'); %>
