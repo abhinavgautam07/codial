@@ -1,7 +1,9 @@
 const Comment = require('../models/comments');
 const Post = require('../models/post_schema');
+const User= require('../models/users_schema');
 module.exports.create = async function (req, res) {
   try {
+   
     let post = await Post.findById(req.body.post);
     if (post) {
       let comment = await Comment.create({
@@ -9,9 +11,21 @@ module.exports.create = async function (req, res) {
         post: req.body.post, //or post._id
         user: req.user._id
       });
+   
+      
 
       post.comments.push(comment._id);
       post.save();
+      if(req.xhr){
+        console.log(req.body);
+        await comment.populate('user','name').execPopulate();
+        return res.status(200).json({
+          data: {
+            comment:comment
+          },
+          message:"comment added!"
+        });
+      }
       return res.redirect('/');
 
     }
