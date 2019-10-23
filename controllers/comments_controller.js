@@ -1,9 +1,9 @@
 const Comment = require('../models/comments');
 const Post = require('../models/post_schema');
-const User= require('../models/users_schema');
+const User = require('../models/users_schema');
 module.exports.create = async function (req, res) {
   try {
-   
+
     let post = await Post.findById(req.body.post);
     if (post) {
       let comment = await Comment.create({
@@ -11,19 +11,19 @@ module.exports.create = async function (req, res) {
         post: req.body.post, //or post._id
         user: req.user._id
       });
-   
-      
+
+
 
       post.comments.push(comment._id);
       post.save();
-      if(req.xhr){
+      if (req.xhr) {
         console.log(req.body);
-        await comment.populate('user','name').execPopulate();
+        await comment.populate('user', 'name').execPopulate();
         return res.status(200).json({
           data: {
-            comment:comment
+            comment: comment
           },
-          message:"comment added!"
+          message: "comment added!"
         });
       }
       return res.redirect('/');
@@ -47,11 +47,16 @@ module.exports.destroy = async function (req, res) {
     let userId = post.user;
     if (comment.user == req.user.id || req.user.id == userId) {
 
-      comment.remove();
-      post.update(postId, { $pull: { comments: req.params.id } }, function (err, post) {
-        return res.redirect('back');
-      });
-
+      await comment.remove();
+      await post.update(postId, { $pull: { comments: req.params.id } });
+      if (req.xhr) {
+        return res.status(200).json({
+          data: {
+            comment: comment
+          }, message: "comment deleted"
+        });
+      }
+      return res.redirect('back');
 
     } else {
       return res.redirect('back');
@@ -63,10 +68,10 @@ module.exports.destroy = async function (req, res) {
     return;
   }
 
-  
 
 
-  
+
+
 
 
 

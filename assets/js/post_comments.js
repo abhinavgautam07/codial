@@ -2,7 +2,7 @@
 
 var addComment = function (postId) {
   let newCommentForm = $(`#post-${postId}-comment-form`);
-  console.log(newCommentForm);
+  
   newCommentForm.submit(function (event) {
     event.preventDefault();
 
@@ -10,12 +10,13 @@ var addComment = function (postId) {
       type: "post",
       url: "/comments/create",
       data: newCommentForm.serialize(),
-      
+
       success: function (data) {
-        let newComment=newCommentDom(data.data.comment);
+        let newComment = newCommentDom(data.data.comment);
         $(`#post-comments-${data.data.comment.post}`).prepend(newComment);
-         
-      },error:function(err){
+        Deletecomment($(' .delete-comment-button', newComment));
+
+      }, error: function (err) {
         console.log(err.responseText);
       }
     });
@@ -25,11 +26,27 @@ var addComment = function (postId) {
 
 
 }
+var Deletecomment = (deleteLink) => {
+
+  $(deleteLink).click((e) => {
+    e.preventDefault();
+  
+    $.ajax({
+      type: "get",
+      url: deleteLink.prop("href"),
+     success: function (data) {
+        $(`#comment-${data.data.comment._id}`).remove();
+      },error : function(error){
+        console.log(error.responseText);
+      }
+    });
+  });
+}
 let newCommentDom = function (comment) {
   return $(`<li id="comment-${comment._id}">
  
   <small>
-    <a href="/comments/destroy/${comment._id}">&times;
+    <a class="delete-comment-button" href="/comments/destroy/${comment._id}">&times;
     </a>
   </small>
 

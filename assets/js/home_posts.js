@@ -71,7 +71,7 @@
 
   //method to delete post
   let DeletePost = (deleteLink) => {
-    console.log(deleteLink);
+    
     $(deleteLink).click((event) => {
       event.preventDefault();
 
@@ -79,8 +79,6 @@
         type: "get",
         //we are sending the id of the  post to be deleted in href using params
         url: $(deleteLink).prop('href'),
-        data: "data",
-
         success: function (data) {
           //we will get the id of the post which was deleted in the data,
           $(`#post-${data.data.post_id}`).remove();
