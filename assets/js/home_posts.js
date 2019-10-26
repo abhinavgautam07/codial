@@ -1,7 +1,10 @@
 {
+  
   //submit the form data for new post using AJAX
   console.log('Hello');
   let createPost = function () {
+    
+   
     ////////////////important//////////////////////////
     // the strategy is to submit the form via ajax and get somthing in return in form of json and then append this json obejct in our page 
     /////////////////////////////////
@@ -9,6 +12,8 @@
     let newPostForm = $("#new-post-form");
     // The submit() method triggers the submit event, or attaches a function to run when a submit event occurs.
     newPostForm.submit(function (event) {
+   
+console.log(abc);
       event.preventDefault();
       $.ajax({
         type: "post",
@@ -18,7 +23,7 @@
         success: function (data) { //this is the data which is recieved from the server
 
           let newPost = newPostDom(data.data.post);
-          console.log(data.data.post)
+    
           $("#post-list-container>ul").prepend(newPost);
           DeletePost($(' .delete-post-button', newPost));
           addComment(data.data.post._id);
@@ -90,5 +95,18 @@
     });
 
   }
+
+  let makepostsAJAX=function (){
+    // console.log($('#post-list-container>ul>li'));
+    $('#post-list-container>ul>li').each(function (){
+      let self=$(this);
+     
+      let postId=self.prop('id').split("-")[1];
+      addComment(postId);
+      makeCommentsAJAX(postId);
+      DeletePost($(' .delete-post-button', self));
+    });
+  }
   createPost();
+  makepostsAJAX();
 }

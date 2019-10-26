@@ -13,6 +13,7 @@ const sassMiddleware = require('node-sass-middleware');
 const flash=require('connect-flash');
 const customMware=require('./config/middleware');
 app.use(cookieParser());
+
 app.use(express.urlencoded());
 app.use(sassMiddleware(
 	{
@@ -59,6 +60,7 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());  //should be used after passport.session as it uses session cookies
 app.use(customMware.setFlash);
 // routes should be placed after the setAutheticatedUser middleware as it contains next(),otherwise res.user wont get set 
+
 app.use('/', require('./routes'));
 const port = 8000;
 

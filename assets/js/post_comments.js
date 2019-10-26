@@ -42,6 +42,16 @@ var Deletecomment = (deleteLink) => {
     });
   });
 }
+//make all comments  ofthe passed postId AJAX type
+let makeCommentsAJAX=function(postId){
+    $(`#post-comments-${postId}>li`).each(function(){
+      let self=$(this);
+     
+      Deletecomment($(' .delete-comment-button',self));
+
+    });
+
+}
 let newCommentDom = function (comment) {
   return $(`<li id="comment-${comment._id}">
  
@@ -61,4 +71,6 @@ let newCommentDom = function (comment) {
 </li>`)
 
 }
+
+
 

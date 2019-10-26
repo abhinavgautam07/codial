@@ -75,12 +75,27 @@ module.exports.destroySession = function (req, res) {
   req.flash('success', 'logged out');
   return res.redirect('/');
 }
-module.exports.update = function (req, res) {
+module.exports.update =  async function (req, res) {
   if (req.user.id == req.params.id) {
-    User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
-      return res.redirect('back');
+    try{
+      let =await User.findById(req.params.id);
+      //we wont be able to get req.body as usual as body parser is not able to parse multipart form
+      //so multer makes a way for us
 
-    });
+      // as uploadedAvatar calls multer
+      //multer gets the form data through uploadedAvatar function and parses it  send the file to the destination and filename
+     await User.uploadedAvatar(req,res,function(err){
+        if(err){
+          console.log('*********multer error',err);
+        }
+        console.log('file',req.file);
+        console.log('body',req.body);
+      });
+
+    }catch(err){
+      console.log('*******error in multer',err);
+      return res.redirect('back');
+    }
   } else {
     return res.status(401).send('unauthorized');
   }
