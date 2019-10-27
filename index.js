@@ -27,11 +27,16 @@ app.use(sassMiddleware(
 ));
 app.use(express.static('./assets'));
 
-
-
-
 app.use(layouts);
-app.use(express.static('./assests'));
+//make the uploads path available to the browser
+
+// because the img tag searches for the /uploads/users/avatars/avtar-... path so we need to amke this path avialable
+
+// the above static is telling that if there is requirement of any static File,look in assests
+// but second one tells tha if you require any static fiel within the /uploads rote look in uploads
+
+app.use('/uploads',express.static('./uploads'));
+
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 

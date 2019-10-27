@@ -1,4 +1,13 @@
-<h1>profile Page</h1>
+<%if(locals.profile_user.avatar){%>
+  <img src="<%=profile_user.avatar%>" alt="<%=profile_user.name%>"style="width:100;height:50">
+
+  <%} else {%>
+    <img src="/images/download.jpg" alt="<%=profile_user.name%>"style="width:100;height:50">
+    <b><i>please upload profile image</i></b>
+    <%}
+  
+  
+  %>
 
 <% if(locals.user.id==profile_user.id) {%> 
   <!-- if user matches show update form   -->
