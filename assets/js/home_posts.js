@@ -13,12 +13,17 @@
     // The submit() method triggers the submit event, or attaches a function to run when a submit event occurs.
     newPostForm.submit(function (event) {
    
-console.log(abc);
+      let formdata=new FormData($("#new-post-form")[0]);
+        console.log(formdata);
       event.preventDefault();
+      
       $.ajax({
         type: "post",
         url: "/posts/create",
-        data: newPostForm.serialize(), //this is data we are sending to the server
+        data: formdata,
+        processData: false,
+        contentType: false, //this is data we are sending to the server
+        
         // Our success function is where we do things after we get a successful AJAX response,
         success: function (data) { //this is the data which is recieved from the server
 
@@ -42,7 +47,10 @@ console.log(abc);
     <small>
       <a class="delete-post-button" href="/posts/destroy/${post._id}">&times;</a>
     </small> 
-    
+   ${post.image ?`<img src="${post.image}" alt="posted-Image" style="height:136px;width:136px">
+   <br>` : `` }
+      
+ 
     ${post.content}
     <br>
     ${post.user.name}

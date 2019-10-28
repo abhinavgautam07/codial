@@ -1,24 +1,40 @@
 const Post = require('../models/post_schema');
 const Comment = require('../models/comments');
-const User=require('../models/users_schema');
+const User = require('../models/users_schema');
 module.exports.create = async function (req, res) {
   try {
-    let post = await Post.create({
-      content: req.body.postContent,
-      user: req.user._id
-    });
-    //we are using postHelper as .populate donot work with create it works only with find
-    //and to show user which was earlier printed undefined we need to populate the post
-    await post.populate('user').execPopulate();
-    if (req.xhr) {
-      return res.status(200).json({
-        data: {
-          post: post
-        },
-        message: "Post created!"
+   await  Post.postImage(req, res, async function (err) {
+      if (err) {
+        console.log("multer error", err);
+      }
+     console.log(req.body);
+     console.log(req.file);
+      let post = await Post.create({
+        content: req.body.postContent,
+        user: req.user._id
       });
-    }
-    return res.redirect('back');
+  
+      await post.populate('user').execPopulate();
+
+      if (req.file) {
+        post.image = `${Post.imagePath}/${req.file.filename}`;
+        console.log(post.image)
+      }
+
+      post.save();
+      if (req.xhr) {
+        console.log("posting via ajax")
+        return res.status(200).json({
+          data: {
+            post: post
+          },
+          message: "Post created!"
+        });
+      }
+      return res.redirect('back');
+    });
+   
+    
 
   } catch (err) {
     console.log('Error', err);
@@ -42,12 +58,12 @@ module.exports.destroy = async function (req, res) {
       post.remove();
 
       await Comment.deleteMany({ post: req.params.id });
-      if(req.xhr){
+      if (req.xhr) {
         return res.status(200).json({
           data: {
-          post_id:req.params.id
+            post_id: req.params.id
           },
-          message:"post deleted!"
+          message: "post deleted!"
         });
       }
       return res.redirect('back');

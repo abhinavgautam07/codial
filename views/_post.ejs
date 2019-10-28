@@ -3,7 +3,10 @@
     <small>
       <a class="delete-post-button" href="/posts/destroy/<%=post._id%>">&times;</a>
     </small> <%}%>
-    
+    <% if(post.image){%>
+        <img src="<%=post.image%>" alt="posted-Image" style="height:136px;width:136px">
+      <br>
+    <%}%>
     <%= post.content%>
     <br>
     <%= post.user.name%>

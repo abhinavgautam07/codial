@@ -1,8 +1,9 @@
+<link rel="stylesheet" href="/css/profile_page.css">
 <%if(locals.profile_user.avatar){%>
-  <img src="<%=profile_user.avatar%>" alt="<%=profile_user.name%>"style="width:100;height:50">
+  <img src="<%=profile_user.avatar%>" id="update-image" alt="<%=profile_user.name%>"style="width:100px;height:100px">
 
   <%} else {%>
-    <img src="/images/download.jpg" alt="<%=profile_user.name%>"style="width:100;height:50">
+    <img src="/images/download.jpg"  alt="<%=profile_user.name%>"style="width:100px;height:100px">
     <b><i>please upload profile image</i></b>
     <%}
   
@@ -13,12 +14,17 @@
   <!-- if user matches show update form   -->
 
   <!-- Multer adds a body object and a file or files object to the request object. The body object contains the values of the text fields of the form, the file or files object contains the files uploaded via the form. -->
-  
+  <img id="blah" src="#" alt="your image" />
     <form action="/users/update/<%=profile_user.id %>" method="POST" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="your name" value="<%=profile_user.name %>" required>
     <input type="email" name="email" placeholder="your email" value="<%=profile_user.email%>" readonly>
-    <input type="file" name="avatar"placeholder="Profile-picture">
+    <label for="pp">upload pic
+      <input type="file" name="avatar" id="pp"placeholder="Profile-picture">
+    </label>
+   <br>
+   <br>
     <button type="submit">submit</button>
+    
     </form>  
   <%} else {%> 
     <!-- else  show only details -->
@@ -36,3 +42,4 @@
   
   
   %>
+  <script  type="text/javascript" src="/js/preview_update.js"></script>
