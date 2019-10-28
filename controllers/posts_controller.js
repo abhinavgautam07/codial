@@ -1,6 +1,8 @@
 const Post = require('../models/post_schema');
 const Comment = require('../models/comments');
 const User = require('../models/users_schema');
+const fs=require('fs');
+const path=require('path');
 module.exports.create = async function (req, res) {
   try {
    await  Post.postImage(req, res, async function (err) {
@@ -56,7 +58,12 @@ module.exports.destroy = async function (req, res) {
     if (post.user == req.user.id) {
       //post.remove works on the object and Post.delete works on the collection name
       post.remove();
+      if (fs.existsSync(path.join(__dirname, '..', post.image))) {
 
+        fs.unlinkSync(path.join(__dirname, '..', post.image));
+
+      }
+      
       await Comment.deleteMany({ post: req.params.id });
       if (req.xhr) {
         return res.status(200).json({
