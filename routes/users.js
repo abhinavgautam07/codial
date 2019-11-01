@@ -29,4 +29,10 @@ router.post('/create-session', passport.authenticate(
     'local',
     {failureRedirect: '/users/sign-in'},
 ), usersController.createSession);
+//the scope is just asking the google to give access to profile and email of the user
+//u might think we can email in profile as well as profile.emails[0].val so what is the need of
+//email in scope but profile.emails[0].val will work only when email is used in scope as then only
+//google will allow u to access someone's email
+router.get('/auth/google',passport.authenticate('google',{scope: ['profile','email']}));
+router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/users/sign-in'}),usersController.createSession);
 module.exports = router;

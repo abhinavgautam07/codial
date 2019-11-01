@@ -9,8 +9,7 @@ module.exports.create = async function (req, res) {
       if (err) {
         console.log("multer error", err);
       }
-     console.log(req.body);
-     console.log(req.file);
+   
       let post = await Post.create({
         content: req.body.postContent,
         user: req.user._id
@@ -58,7 +57,7 @@ module.exports.destroy = async function (req, res) {
     if (post.user == req.user.id) {
       //post.remove works on the object and Post.delete works on the collection name
       post.remove();
-      if (fs.existsSync(path.join(__dirname, '..', post.image))) {
+      if (post.image && fs.existsSync(path.join(__dirname, '..', post.image))) {
 
         fs.unlinkSync(path.join(__dirname, '..', post.image));
 

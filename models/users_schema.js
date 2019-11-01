@@ -30,6 +30,12 @@ const userSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+//for ensuring that password is not show in api request
+userSchema.methods.toJSON = function() {
+  var obj = this.toObject();
+  delete obj.password;
+  return obj;
+ }
 // __dirname wil give F/nodews/codial/models and joining .. will return F/nodews/codial as path.join return a normalized path i.e. it resolves the .. and / according to there meaning
 
 /////////////////////////////2nd use of multer////////////////////
