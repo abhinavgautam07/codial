@@ -36,10 +36,25 @@
         <%=profile_user.name%>
       </li>
       </ul>
-    
+       <!-- send post request with the button information it will contain will be id of the user to whome request will be sent -->
+    <button type="button"id="addFriend-<%=profile_user._id%>" class="friendship-button">
+     
+        <%if(locals.already_friend){%>
+      Remove
+          
+          <%}else{%>
+           Add as Friend
+            <%}%>
+    </button>
     
     <%}
   
   
   %>
   <script  type="text/javascript" src="/js/preview_update.js"></script>
+  <script type="text/javascript"src="/js/make_friendship.js">
+  </script>
+  <script>
+   let toggler=$('.friendship-button');
+ new MakeFriendship(toggler);
+  </script>

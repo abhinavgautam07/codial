@@ -10,6 +10,19 @@
     <%= post.content%>
     <br>
     <%= post.user.name%>
+    <br>
+    <div id="likes-container-<%=post._id%>">
+      <%= post.likes.length%> 
+    </div>
+    likes
+    <br>
+
+    <%if(locals.user){%> 
+      <a class="like-post-button" href="/likes/toggle/?id=<%= post._id%>&Type=Post">
+      Like
+      </a>
+      
+      <%}%>
   </p>
   <div class="add-posts-comments">
     <% if(locals.user){%>
@@ -43,3 +56,4 @@
   
     </li>
     <script type="text/javascript" src="/js/post_comments.js"></script>
+    <script type="text/javascript" src="/js/likes.js"></script>

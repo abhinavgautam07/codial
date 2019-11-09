@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-
+const friendship_controller=require('../controllers/friendship_controller');
 const usersController = require('../controllers/users_controller');
 
 //in line 7 the middleware is just checking that user is authenticated or not.
@@ -35,4 +35,5 @@ router.post('/create-session', passport.authenticate(
 //google will allow u to access someone's email
 router.get('/auth/google',passport.authenticate('google',{scope: ['profile','email']}));
 router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/users/sign-in'}),usersController.createSession);
+router.post('/toggleFriendship',passport.checkAuthentication,friendship_controller.toggleFriendship);
 module.exports = router;

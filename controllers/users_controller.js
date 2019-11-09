@@ -1,6 +1,7 @@
 const User = require('../models/users_schema');
 const Post = require('../models/post_schema');
 const mongoose = require('mongoose');
+const Friendship=require('../models/friendship');
 const fs = require('fs');
 const path = require('path');
 module.exports.signIn = function (req, res) {
@@ -74,14 +75,30 @@ module.exports.createUser = async function (req, res) {
 
 
 }
-module.exports.profile = function (req, res) {
-  User.findById(req.params.id, function (err, user) {
-    return res.render('profile', {
-
-      title: "Codial | Profile",
-      profile_user: user
-    });
+module.exports.profile = async function (req, res) {
+try{
+  let profile_user= await User.findById(req.params.id);
+  let already_friend=false;
+  let type1=await Friendship.find({
+    to_user:req.params.id,
+    from_user:req.user._id
   });
+  let type2=await Friendship.find({
+    to_user:req.user._id,
+    from_user:req.params.id
+  });
+  if(type1 || type2){
+    already_friend=true;
+  }
+ return res.render('profile',{
+   title: 'profile | codial',
+   already_friend:already_friend,
+   profile_user:profile_user
+ });
+}catch(err){
+  console.log(err);
+  return;
+}
 
 }
 module.exports.createSession = function (req, res) {
