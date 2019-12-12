@@ -1,4 +1,5 @@
 const express = require('express');
+const env = require('./config/environment');
 const cookieParser = require('cookie-parser');
 // const routes = require('./routes/index');
 const app = express();
@@ -19,18 +20,19 @@ const chatServer = require('http').Server(app);
 const chatSocket = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
+const path = require('path');
 app.use(cookieParser());
 
 app.use(express.urlencoded());
 app.use(sassMiddleware({
 
-    src: './assets/scss',
-    dest: './assets/css',
+    src: path.join(__dirname, env.asset_path, 'scss'),
+    dest: path.join(__dirname, env.asset_path, 'css'),
     debug: true,
     outputStyle: 'extended',
     prefix: '/css'
 }));
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 
 app.use(layouts);
 //make the uploads path available to the browser
@@ -50,7 +52,7 @@ app.set('views', './views');
 // here we are setting up the cookie for the session created
 app.use(session({
         name: 'codial',
-        secret: 'blahsomthing',
+        secret: env.session_cookie_key,
         saveUninitialized: false,
         resave: false,
         cookie: {
@@ -64,7 +66,9 @@ app.use(session({
 
 ));
 app.use(passport.initialize());
+console.log(passport.authenticate.toString());
 app.use(passport.session());
+
 app.use(passport.setAuthenticatedUser);
 app.use(flash()); //should be used after passport.session as it uses session cookies
 app.use(customMware.setFlash);

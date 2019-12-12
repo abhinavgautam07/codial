@@ -2,69 +2,68 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/css/layout.css">
-  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-  <%- style %>
-  <title>
-    <%= title %>
-  </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <%- style %>
+        <title>
+            <%= title %>
+        </title>
 </head>
 
-<body id="particles-js">
-  <h1 id="brand">codial</h1>
-  <%- include('_header'); %>
+<body id="main-body">
+    <h1 id="brand">codial</h1>
+    <%- include('_header'); %>
 
 
-  <div class="margin"></div>
+        <div class="margin"></div>
 
-  <main id="layout-main">
-    <%- body %>
-  </main>
+        <main id="layout-main">
+            <%- body %>
+        </main>
 
 
 
-  <%- include('_footer'); %>
+        <%- include('_footer'); %>
 
-  <%- script %>
-  <!-- <script type="text/javascript" src="/js/particles.js"></script>
+            <%- script %>
+                <!-- <script type="text/javascript" src="/js/particles.js"></script>
 <script type="text/javascript" src="/js/app.js"></script> -->
-  <script>
-    < %
-    if (flash.success && flash.success.length > 0) {
-      % >
-      new Noty({
-        theme: 'relax',
-        type: 'success',
-        layout: 'topRight',
-        text: '<%=flash.success%>',
-        timeout: 1500
-      }).show();
+                <script>
+                    < %
+                    if (flash.success && flash.success.length > 0) { %
+                        >
+                        new Noty({
+                            theme: 'relax',
+                            type: 'success',
+                            layout: 'topRight',
+                            text: '<%=flash.success%>',
+                            timeout: 1500
+                        }).show();
 
-      <
-      %
-    } % >
-    <
-    %
-    if (flash.error && flash.error.length > 0) {
-      % >
-      new Noty({
-        theme: 'relax',
-        type: 'error',
-        layout: 'topRight',
-        text: '<%=flash.error%>',
-        timeout: 1500
-      }).show();
+                        <
+                        %
+                    } % >
+                    <
+                    %
+                    if (flash.error && flash.error.length > 0) { %
+                        >
+                        new Noty({
+                            theme: 'relax',
+                            type: 'error',
+                            layout: 'topRight',
+                            text: '<%=flash.error%>',
+                            timeout: 1500
+                        }).show();
 
-      <
-      %
-    } % >
-  </script>
-  <script>
-
-  </script>
+                        <
+                        %
+                    } % >
+                </script>
+                <script>
+                </script>
 </body>
 
 </html>

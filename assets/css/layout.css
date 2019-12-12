@@ -1,4 +1,4 @@
-#particles-js {
+#main-body {
   margin: 0px;
   padding: 0px;
   background-image: url("../images/back.jpg");
@@ -10,7 +10,7 @@
 #brand {
   margin: 15px;
   margin-bottom: 7px;
-  font-family: sans-serif;
+  font-family: cursive;
   color: #ecd5d5; }
 
 a:active {
